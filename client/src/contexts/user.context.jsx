@@ -23,6 +23,7 @@ export const UserProvider = ({ children }) => {
         const userId = decoded.userId;
         const response = await apiUser.getUser(userId);
         setUser(response.data);
+        console.log(response.data);
         dispatch(fetchCart());
       } catch (error) {
         console.error("Lỗi khi lấy user:", error);
