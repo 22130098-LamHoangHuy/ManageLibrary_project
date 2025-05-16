@@ -10,6 +10,7 @@ import { UserProvider } from "./contexts/user.context";
 import FilterBook from "./pages/filterBook";
 import DetailBook from "./pages/detailBook";
 import Cart from "./pages/cart";
+import GoogleAuthSuccess from "./pages/googleAuthSucess";
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
             <Route path="/:category/:subCategory" element={<FilterBook />} />
             <Route path="/:category" element={<FilterBook />} />
             <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/google-auth-success"
+              element={<GoogleAuthSuccess />}
+            />
           </Routes>
         </div>
         <Footer />

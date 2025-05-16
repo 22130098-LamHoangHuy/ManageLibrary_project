@@ -30,9 +30,9 @@ authRouter.get(
     session: false,
   }),
   (req, res) => {
-    const token = generateToken(res, req.user._id);
-    const referer = FONTEND_DOMAIN;
-    res.redirect(referer);
+    const token = generateToken(req.user._id);
+    const redirectUrl = `${FONTEND_DOMAIN}/google-auth-success?token=${token}`;
+    res.redirect(redirectUrl);
     // const androidRedirect = `myapp://auth/google/callback?token=${token}`;
     // res.redirect(androidRedirect);
   }

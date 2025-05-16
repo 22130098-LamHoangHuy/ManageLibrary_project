@@ -27,6 +27,7 @@ function FromSignIn() {
   const handleSigInWithGoogle = async () => {
     try {
       await authApi.signInWithGoogle();
+
       dispatch(fetchCart());
     } catch (error) {
       console.log(error);
