@@ -41,3 +41,6 @@ server/dist/
 # Others (Vite specific)
 dist-ssr/
 *.local
+
+server/src/utils/loadData.js
+server/src/utils/update.js
