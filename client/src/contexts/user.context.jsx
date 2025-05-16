@@ -1,6 +1,5 @@
 // src/context/UserContext.js
 import { createContext, useState, useEffect, useContext } from "react";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import apiUser from "../api/user.api";
 import { useDispatch } from "react-redux";
@@ -17,13 +16,15 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = Cookies.get("token");
+        const token = localStorage.getItem("token");
         if (!token) return setLoading(false);
+
         const decoded = jwtDecode(token);
         const userId = decoded.userId;
-        const response = await apiUser.getUser(userId);
+
+        const response = await apiUser.getUser(userId, token); // truyền token nếu cần
         setUser(response.data);
-        console.log(response.data);
+
         dispatch(fetchCart());
       } catch (error) {
         console.error("Lỗi khi lấy user:", error);
@@ -37,7 +38,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const logout = () => {
-    Cookies.remove("token");
+    localStorage.removeItem("token");
     localStorage.removeItem("cartItems");
     setUser(null);
   };

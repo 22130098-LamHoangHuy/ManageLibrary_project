@@ -4,16 +4,16 @@ import { JWT_SECRET_KEY } from "../../configs/env.js";
 
 export const verifyToken = (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const authHeader = req.headers.authorization;
 
-    if (!token) throw new ErrorHandler("khong co token", 401);
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      throw new ErrorHandler("Không có token", 401);
+    }
 
+    const token = authHeader.split(" ")[1];
     const decode = jwt.verify(token, JWT_SECRET_KEY);
 
-    if (!decode) throw new ErrorHandler("token khong hop le", 401);
-
     req.userId = decode.userId;
-
     next();
   } catch (error) {
     next(error);

@@ -59,17 +59,15 @@ export const verifySignUpService = async (req, otp) => {
   return newUser;
 };
 
-export const signInService = async (res, email, password) => {
+export const signInService = async (email, password) => {
   const user = await User.findOne({ email });
 
-  if (!user) throw new ErrorHandler("email khong dung", 400);
+  if (!user) throw new ErrorHandler("email không đúng", 400);
 
   const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new ErrorHandler("sai mật khẩu", 400);
 
-  if (!isMatch) throw new ErrorHandler("sai mat khau", 400);
-
-  const token = generateToken(res, user._id);
-
+  const token = generateToken(user._id);
   return token;
 };
 

@@ -39,9 +39,9 @@ export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const token = await signInService(res, email, password);
+    const token = await signInService(email, password);
 
-    res.status(200).json({ token: token });
+    res.status(200).json({ token });
   } catch (error) {
     next(error);
   }
@@ -49,7 +49,7 @@ export const signIn = async (req, res, next) => {
 
 export const logOut = async (req, res, next) => {
   try {
-    await logOutService(res); // gọi service để xóa cookie
+    await logOutService(res);
 
     res.status(200).json({ message: "Đăng xuất thành công" });
   } catch (error) {
