@@ -3,30 +3,30 @@ import authApi from "../api/auth.api";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../redux/cartSlice";
-// import { useUser } from "../contexts/user.context";
-// import apiUser from "../api/user.api";
-// import { jwtDecode } from "jwt-decode";
+import { useUser } from "../contexts/user.context";
+import apiUser from "../api/user.api";
+import { jwtDecode } from "jwt-decode";
 
 function FromSignIn() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  // const { setUser } = useUser();
+  const { setUser } = useUser();
 
   const handleSignIn = async () => {
     try {
       const response = await authApi.signIn({ email, password });
       if (response.data) {
-        // const token = Cookies.get("token");
-        // if (token) {
-        //   const decoded = jwtDecode(token); // 👈 decode để lấy userId
-        //   const res = await apiUser.getUser(decoded.userId); // 👈 gọi API để lấy thông tin người dùng
-        //   setUser(res.data); // 👈 cập nhật user vào context
-        // }
+        const token = Cookies.get("token");
+        if (token) {
+          const decoded = jwtDecode(token); // 👈 decode để lấy userId
+          const res = await apiUser.getUser(decoded.userId); // 👈 gọi API để lấy thông tin người dùng
+          setUser(res.data); // 👈 cập nhật user vào context
+        }
 
         // dispatch(fetchCart()); // vẫn lấy giỏ hàng như cũ
-        window.location.reload();
+        // window.location.reload();
         handleCloseSignIn(); // đóng modal
       }
     } catch (error) {
