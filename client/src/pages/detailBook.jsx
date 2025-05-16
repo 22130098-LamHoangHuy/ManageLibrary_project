@@ -1,5 +1,5 @@
 import { ShoppingCart } from "lucide-react";
-import apiBook from "../api/book.apt";
+import apiBook from "../api/book.api";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";

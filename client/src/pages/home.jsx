@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import apiBook from "../api/book.apt";
+import apiBook from "../api/book.api";
 import apiCart from "../api/cart.api";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
