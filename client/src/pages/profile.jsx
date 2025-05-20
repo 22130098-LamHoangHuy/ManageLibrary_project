@@ -21,6 +21,7 @@ const Profile = () => {
 
   // Khi user thay đổi, cập nhật lại các state
   useEffect(() => {
+    console.log("profile");
     if (user) {
       setUsername(user.username || "");
       setEmail(user.email || "");

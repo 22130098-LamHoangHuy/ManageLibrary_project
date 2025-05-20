@@ -7,6 +7,7 @@ import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import ticketApi from "../api/ticket.api";
+
 import {
   fetchCart,
   increaseQuantity,
@@ -25,6 +26,7 @@ export default function Cart() {
   const [returnDate, setReturnDate] = useState(null);
   const [note, setNote] = useState("");
   const [error, setError] = useState({});
+
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
@@ -71,13 +73,14 @@ export default function Cart() {
 
     try {
       await ticketApi.createTicket(ticketBody);
-      toast.success("Tạo phiếu thành công!");
+
       // reset nếu cần
       setSelectedBooks([]);
       setNote("");
       setBorrowDate(null);
       setReturnDate(null);
-      dispatch(fetchCart()); // reload giỏ
+      dispatch(fetchCart());
+      toast.success("Tạo phiếu thành công!");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.errors) {
         // chuyển mảng lỗi thành object key: message
@@ -103,6 +106,7 @@ export default function Cart() {
             <input
               type="checkbox"
               className="checkbox checkbox-info checkbox-xs rounded-[3px] ms-2"
+              checked={selectedBooks.some((b) => b.bookId === item.bookId)}
               onChange={(e) => {
                 setSelectedBooks((prev) => {
                   if (e.target.checked) {

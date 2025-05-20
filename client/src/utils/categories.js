@@ -61,4 +61,8 @@ export const categories = [
     title: "Sách Học Ngoại Ngữ",
     links: ["Tiếng Anh", "Tiếng Nhật", "Tiếng Hoa", "Tiếng Hàn"],
   },
+  {
+    title: "Sách Ebook",
+    links: [],
+  },
 ];

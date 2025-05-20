@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, BookOpenText } from "lucide-react";
 import apiBook from "../api/book.api";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,6 +8,9 @@ import apiCart from "../api/cart.api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../redux/cartSlice";
+import PDFViewer from "../components/PDFViewer";
+
+const url = import.meta.env.VITE_API_URL;
 
 function DetailBook() {
   const [book, setBook] = useState(null);
@@ -16,7 +19,10 @@ function DetailBook() {
 
   const dispatch = useDispatch();
 
+  const [showPDF, setShowPDF] = useState(false);
+
   useEffect(() => {
+    console.log("detail book");
     const fetchBook = async () => {
       try {
         const response = await apiBook.getBook(bookId);
@@ -54,6 +60,19 @@ function DetailBook() {
     ? book.description
     : book.description.slice(0, maxDescriptionLength) +
       (isLongDescription ? "..." : "");
+
+  const handleReadEbook = async (ebook) => {
+    const response = await fetch(ebook.url, { method: "HEAD" }); // Kiểm tra khả năng truy cập
+    if (!response.ok) {
+      toast.error("Đường dẫn ebook hiện không truy cập được");
+      return;
+    }
+    if (ebook) {
+      setShowPDF(true);
+    } else {
+      toast.error("không có bản ebook");
+    }
+  };
 
   return (
     <div className="w-full max-w-[90%] grid grid-cols-5 gap-4 mb-7">
@@ -97,6 +116,13 @@ function DetailBook() {
             thêm vào giỏ hàng
             <ShoppingCart size={19} />
           </button>
+          <button
+            className="btn btn-outline btn-warning ml-5"
+            onClick={() => handleReadEbook(book.ebook)}
+          >
+            Đọc ebook
+            <BookOpenText size={19} />
+          </button>
         </div>
 
         <div className="text-base">
@@ -113,6 +139,12 @@ function DetailBook() {
           )}
         </div>
       </div>
+      {showPDF && (
+        <PDFViewer
+          fileUrl={`${url}${book.ebook}`}
+          onClose={() => setShowPDF(false)}
+        />
+      )}
     </div>
   );
 }

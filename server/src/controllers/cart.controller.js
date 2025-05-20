@@ -42,6 +42,7 @@ export const updateCart = async (req, res, next) => {
   }
 };
 
+//6.2 gọi phương thức getCarts() đê lấy danh sách giỏ hàng từ lớp CartController
 export const getCarts = async (req, res, next) => {
   try {
     const userId = req.userId;

@@ -37,7 +37,7 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-// PATCH /:userId
+//5.4 nhấn lưu thay đổ, chuyển tiếp thông tin trong lớp UserController theo phương thức updateUser().
 export const updateUser = async (req, res, next) => {
   try {
     const updated = await updateUserService(req.params.userId, req.body);

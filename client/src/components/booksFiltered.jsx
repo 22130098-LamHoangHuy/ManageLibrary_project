@@ -26,6 +26,7 @@ function BooksFiltered() {
   };
 
   useEffect(() => {
+    console.log("render book");
     const fetchBooks = async () => {
       try {
         let res;

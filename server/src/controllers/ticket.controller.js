@@ -38,7 +38,7 @@ export const getTicketByStatus = async (req, res, next) => {
     next(error);
   }
 };
-
+//6.6 gọi phương thức createTicket() từ lớp TicketController
 export const creatTicket = async (req, res, next) => {
   try {
     const newTicket = await createTicketService(req.userId, req.body);
@@ -52,7 +52,7 @@ export const deleteTicket = async (req, res, next) => {
   try {
     const { ticketId } = req.params;
     await deleteTicketService(ticketId);
-    res.status(200).json({ message: "Xóa ticket thành công" });
+    res.status(200).json({ message: "xóa phiếu thành công" });
   } catch (error) {
     next(error);
   }
@@ -61,7 +61,7 @@ export const deleteTicket = async (req, res, next) => {
 export const setSatusTicket = async (req, res, next) => {
   try {
     const { ticketId } = req.params;
-    const { status } = req.body;
+    const { status } = req.query;
     const updated = await setStatusTicketService(ticketId, status);
     res.status(200).json(updated);
   } catch (error) {

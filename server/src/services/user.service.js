@@ -22,7 +22,7 @@ export const createUserService = async (userData) => {
   return user;
 };
 
-// Cập nhật user
+//5.5 lưu thông tin thay đổi xuống cơ sở dữ liệu trong lớp UserService theo phương thức updateUserService().
 export const updateUserService = async (userId, updateData) => {
   const user = await User.findByIdAndUpdate(userId, updateData, {
     new: true,

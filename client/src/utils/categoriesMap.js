@@ -61,4 +61,5 @@ export const slugToNameMap = new Map([
   ["ticket-cancel", "Phiếu đã huỷ"],
   ["ticket-return", "Phiếu đã trả"],
   ["ticket-approval", "Phiếu chờ duyệt"],
+  ["sach-ebook", "Sách Ebook"],
 ]);

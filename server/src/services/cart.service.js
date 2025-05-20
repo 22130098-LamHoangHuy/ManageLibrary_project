@@ -40,6 +40,8 @@ export const updateCartService = async (userId, bookId, quantity) => {
   await user.save();
   return user.cart;
 };
+
+//6.3 lấy danh sách giỏ hàng từ cơ sở dữ liệu qua getCartsService() từ lớp CartService
 export const getCartsService = async (userId) => {
   const user = await User.findById(userId)
     .populate({

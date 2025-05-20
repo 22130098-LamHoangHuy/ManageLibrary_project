@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { type } from "os";
 
 const bookSchema = new mongoose.Schema(
   {
@@ -67,7 +68,11 @@ const bookSchema = new mongoose.Schema(
         },
       },
     ],
+    ebook: {
+      type: String,
+    },
   },
+
   { timestamps: true }
 );
 
