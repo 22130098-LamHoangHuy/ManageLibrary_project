@@ -56,4 +56,9 @@ export const slugToNameMap = new Map([
 
   ["profile", "Hồ sơ"],
   ["cart", "Giỏ hàng"],
+  ["my-ticket", "Phiếu của tôi"],
+  ["ticket-borrow", "Phiếu đang mượn"],
+  ["ticket-cancel", "Phiếu đã huỷ"],
+  ["ticket-return", "Phiếu đã trả"],
+  ["ticket-approval", "Phiếu chờ duyệt"],
 ]);

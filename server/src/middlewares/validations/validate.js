@@ -15,7 +15,7 @@ const validate = (validations) => {
     return res.status(400).json({
       status: "400",
       errors: errors.array().map((err) => ({
-        field: err.param,
+        field: err.path,
         message: err.msg,
         value: err.value,
       })),

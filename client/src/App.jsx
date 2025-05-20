@@ -11,6 +11,11 @@ import FilterBook from "./pages/filterBook";
 import DetailBook from "./pages/detailBook";
 import Cart from "./pages/cart";
 import GoogleAuthSuccess from "./pages/googleAuthSucess";
+import MyTicket from "./pages/myTicket";
+import TicketBorrow from "./pages/myTicket/ticketBorrow";
+import TicketApproval from "./pages/myTicket/ticketApproval";
+import TicketReturn from "./pages/myTicket/ticketReturn";
+import TicketCancel from "./pages/myTicket/ticketCancel";
 
 function App() {
   return (
@@ -34,6 +39,12 @@ function App() {
             <Route path="/:category/:subCategory" element={<FilterBook />} />
             <Route path="/:category" element={<FilterBook />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/" element={<MyTicket />}>
+              <Route path="ticket-borrow" element={<TicketBorrow />} />
+              <Route path="ticket-approval" element={<TicketApproval />} />
+              <Route path="ticket-return" element={<TicketReturn />} />
+              <Route path="ticket-cancel" element={<TicketCancel />} />
+            </Route>
             <Route
               path="/google-auth-success"
               element={<GoogleAuthSuccess />}
@@ -41,7 +52,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
-        <ToastContainer autoClose={2000} pauseOnHover={false} />
+        <ToastContainer autoClose={1600} pauseOnHover={false} />
       </BrowserRouter>
     </UserProvider>
   );

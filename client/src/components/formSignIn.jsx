@@ -20,6 +20,7 @@ function FromSignIn() {
         handleCloseSignIn(); // đóng modal
       }
     } catch (error) {
+      console.log(error.response.data.message);
       if (error.response) setError(error.response.data.message);
     }
   };
@@ -108,7 +109,7 @@ function FromSignIn() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          {error === "email khong dung" && (
+          {error === "email không đúng" && (
             <p className="text-red-500 text-sm mt-1">{error}</p>
           )}
         </div>
@@ -142,7 +143,7 @@ function FromSignIn() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error === "sai mat khau" && (
+          {error === "sai mật khẩu" && (
             <p className="text-red-500 text-sm mt-1">{error}</p>
           )}
           <div className="flex justify-end mt-2">

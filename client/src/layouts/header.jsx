@@ -43,10 +43,25 @@ const Header = () => {
     setKeyWord("");
   };
 
+  const handleOpenSignIn = () => {
+    handleCloseRequireSignIn();
+    // Mở modal đăng ký
+    const modalSignIn = document.getElementById("form_sign_in");
+    if (modalSignIn) {
+      modalSignIn.showModal();
+    }
+  };
+  const handleCloseRequireSignIn = () => {
+    const modalSignUp = document.getElementById("require_sign_in");
+    if (modalSignUp) {
+      modalSignUp.close();
+    }
+  };
+
   return (
     <div className="flex navbar bg-base-100 shadow-sm">
       <div className="flex-[2]">
-        <Link to={"/"} className="btn btn-ghost text-xl">
+        <Link to={"/"}>
           <img className="w-[130px]" src={logo} alt="" />
         </Link>
       </div>
@@ -54,7 +69,7 @@ const Header = () => {
         <div className="dropdown dropdown-hover">
           <div className="flex row items-center cursor-pointer">
             <LayoutList />
-            <span className="ms-1">Thể loại</span>
+            <span className="ms-1 font-semibold">Thể loại</span>
           </div>
           <div
             tabIndex={0}
@@ -118,14 +133,32 @@ const Header = () => {
       </div>
       <div className="flex-[2] flex justify-between">
         <div className="flex  items-center dropdown dropdown-hover">
-          <Link to={"/cart"}>
-            <ShoppingCart />
-            {totalQuantity > 0 && (
-              <span className="absolute -top-2 -right-3 bg-red-600 rounded-full px-2 text-xs text-white">
-                {totalQuantity}
-              </span>
-            )}
-          </Link>
+          {user ? (
+            <Link to={"/cart"}>
+              <div className="indicator">
+                <ShoppingCart />
+                {totalQuantity > 0 && (
+                  // <span className="absolute -top-2 -right-3 bg-red-600 rounded-full px-2 text-xs text-white">
+
+                  // </span>
+                  <span className="indicator-item badge badge-info -right-1 w-7 h-5">
+                    {" "}
+                    {totalQuantity}
+                  </span>
+                )}
+              </div>
+            </Link>
+          ) : (
+            <a
+              type="button"
+              className="hover: cursor-pointer"
+              onClick={() =>
+                document.getElementById("require_sign_in").showModal()
+              }
+            >
+              <ShoppingCart />
+            </a>
+          )}
         </div>
         <div className="flex  items-center">
           <a href="" tabIndex={0}>
@@ -134,7 +167,38 @@ const Header = () => {
         </div>
 
         <div className="flex  items-center">
-          <a href="">phiếu của tôi</a>
+          {user ? (
+            <Link to={"/ticket-borrow"} className="font-semibold">
+              Phiếu của tôi
+            </Link>
+          ) : (
+            <a
+              type="button"
+              className="hover: cursor-pointer font-semibold"
+              onClick={() =>
+                document.getElementById("require_sign_in").showModal()
+              }
+            >
+              Phiếu của tôi
+            </a>
+          )}
+          <dialog id="require_sign_in" className="modal">
+            <div className="modal-box w-60">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <h4 className="font-bold text-lg mb-4">Bạn cần đăng nhập</h4>
+              <button
+                className="btn btn-info w-full mt-1"
+                onClick={handleOpenSignIn}
+              >
+                Đăng nhập
+              </button>
+            </div>
+          </dialog>
         </div>
       </div>
       <div className="flex-[1] flex justify-center">

@@ -1,6 +1,6 @@
 import { categories } from "../utils/categories";
 import { publishers } from "../utils/publishers";
-import { Link, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import BooksFiltered from "../components/booksFiltered";
 import { slugify } from "../utils/slugify";
 
@@ -18,21 +18,29 @@ const FilterBook = () => {
           {categories.map((category, index) => (
             <li key={index}>
               <details>
-                <summary className="text-sm hover:bg-info">
-                  <Link to={`/${slugify(category.title)}?page=1`}>
+                <summary className="text-sm">
+                  <NavLink to={`/${slugify(category.title)}?page=1`}>
                     {category.title}
-                  </Link>
+                  </NavLink>
                 </summary>
                 <ul className="">
                   {category.links.map((link, indx) => (
-                    <li key={indx} className="hover:bg-info">
-                      <Link
+                    <li key={indx}>
+                      <NavLink
                         to={`/${slugify(category.title)}/${slugify(
                           link
                         )}?page=1`}
+                        className={({ isActive }) =>
+                          `flex items-center gap-2 px-3 py-2 rounded-md transition 
+                   ${
+                     isActive
+                       ? "bg-blue-100 text-blue-600"
+                       : "hover:bg-gray-200"
+                   }`
+                        }
                       >
                         {link}
-                      </Link>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>

@@ -84,7 +84,7 @@ function Home() {
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className="text-2xl">Sách nổi bật</div>
+      <div className="text-2xl font-semibold">Sách nổi bật</div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6">
         {books.map((book, index) => (
           <div

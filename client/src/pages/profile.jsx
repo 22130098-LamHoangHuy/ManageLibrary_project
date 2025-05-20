@@ -2,8 +2,11 @@ import { useUser } from "../contexts/user.context";
 import apiUser from "../api/user.api";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { formatDate } from "../utils/fomatDate";
 import { Image } from "lucide-react";
+import DatePicker from "react-datepicker";
+import { vi } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
@@ -75,7 +78,7 @@ const Profile = () => {
   return (
     <div className="flex w-full max-w-3xl border  rounded-lg overflow-hidden shadow-md mb-5">
       {/* Left panel - User info */}
-      <div className="w-1/3 p-6 flex flex-col items-center bg-gray-200 border-r">
+      <div className="w-1/3 p-6 flex flex-col items-center bg-primary-content border-r">
         <div className="avatar mb-5 mt-5">
           <div className="w-30 rounded-full border">
             <img src={avatar} />
@@ -167,13 +170,14 @@ const Profile = () => {
             <label className="block text-sm font-medium mb-1 text-gray-700">
               Giới tính
             </label>
+
             <div className="flex row ms-3">
               <div className="me-6">
                 <label className="label me-1">Nam</label>
                 <input
                   type="radio"
                   name="render"
-                  className="radio"
+                  className="radio size-5"
                   value="nam"
                   checked={gender === "nam"}
                   onChange={(e) => setGender(e.target.value)}
@@ -184,7 +188,7 @@ const Profile = () => {
                 <input
                   type="radio"
                   name="render"
-                  className="radio"
+                  className="radio size-5"
                   value="nữ"
                   checked={gender === "nữ"}
                   onChange={(e) => setGender(e.target.value)}
@@ -196,12 +200,37 @@ const Profile = () => {
             <label className="block text-sm font-medium mb-1 text-gray-700">
               Ngày sinh
             </label>
-            <input
-              type="date"
-              className="input"
-              value={formatDate(birthday)}
-              onChange={(e) => setBirthday(e.target.value)}
-            />
+
+            <label className="input">
+              <DatePicker
+                showIcon
+                toggleCalendarOnIconClick
+                selected={birthday}
+                onChange={(date) => setBirthday(date)}
+                locale={vi}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Chọn ngày sinh"
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-calendar-icon lucide-calendar"
+                  >
+                    <path d="M8 2v4" />
+                    <path d="M16 2v4" />
+                    <rect width="18" height="18" x="3" y="4" rx="2" />
+                    <path d="M3 10h18" />
+                  </svg>
+                }
+              />
+            </label>
           </div>
           <div className="w-[18rem] mt-3 flex justify-end">
             <button

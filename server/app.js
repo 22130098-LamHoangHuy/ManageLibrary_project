@@ -5,6 +5,7 @@ import authRouter from "./src/routes/auth.route.js";
 import userRouter from "./src/routes/user.route.js";
 import bookRouter from "./src/routes/book.route.js";
 import cartRouter from "./src/routes/cart.route.js";
+import ticketRouter from "./src/routes/ticket.route.js";
 import errorHandler from "./src/middlewares/errors/errors.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
@@ -44,6 +45,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/book", bookRouter);
 app.use("/api/v1/cart", cartRouter);
+app.use("/api/v1/ticket", ticketRouter);
 app.use(errorHandler);
 app.get("/", (req, res) => {
   res.send("welcome to api");
