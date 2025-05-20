@@ -80,6 +80,7 @@ export default function Cart() {
       setBorrowDate(null);
       setReturnDate(null);
       dispatch(fetchCart());
+      setError({});
       toast.success("Tạo phiếu thành công!");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.errors) {
