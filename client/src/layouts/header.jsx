@@ -18,9 +18,6 @@ import { categories } from "../utils/categories";
 import { slugify } from "../utils/slugify";
 import BooksSearched from "../components/booksSearched";
 import { useSelector } from "react-redux";
-// import { useFilterBook } from "../contexts/filterBook.context";
-
-// trong component Header
 
 const Header = () => {
   // const { setSelectedCategories } = useFilterBook();

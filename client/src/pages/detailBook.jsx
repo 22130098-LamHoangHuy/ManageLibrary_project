@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../redux/cartSlice";
 import PDFViewer from "../components/PDFViewer";
+import { useUser } from "../contexts/user.context";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -16,6 +17,7 @@ function DetailBook() {
   const [book, setBook] = useState(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { bookId } = useParams();
+  const { user } = useUser();
 
   const dispatch = useDispatch();
 
@@ -36,11 +38,17 @@ function DetailBook() {
   }, [bookId]);
 
   const handleAddCart = async (bookId) => {
+    if (!user) {
+      const modal = document.getElementById("require_sign_in");
+      if (modal) modal.showModal();
+      return;
+    }
+
     try {
       const { data } = await apiCart.addCart(bookId);
       if (data) {
         toast.success("Thêm giỏ hàng thành công");
-        dispatch(fetchCart()); // cập nhật lại cart state
+        dispatch(fetchCart());
       }
     } catch (error) {
       console.error("Lỗi khi thêm giỏ hàng:", error);

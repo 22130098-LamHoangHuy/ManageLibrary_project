@@ -9,12 +9,12 @@ import apiCart from "../api/cart.api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../redux/cartSlice";
+import { useUser } from "../contexts/user.context";
 
 function BooksFiltered() {
   const [books, setBooks] = useState([]);
   const [totalPage, setTotalPage] = useState(null);
-  // const { selectedCategories } = useFilterBook();
-  // const selectCategory = useSelector((state) => state.category.selectCategory);
+  const { user } = useUser();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get("page")) || 1;
@@ -48,11 +48,17 @@ function BooksFiltered() {
   }, [page, subCategory, category]);
 
   const handleAddCart = async (bookId) => {
+    if (!user) {
+      const modal = document.getElementById("require_sign_in");
+      if (modal) modal.showModal();
+      return;
+    }
+
     try {
       const { data } = await apiCart.addCart(bookId);
       if (data) {
         toast.success("Thêm giỏ hàng thành công");
-        dispatch(fetchCart()); // cập nhật lại cart state
+        dispatch(fetchCart());
       }
     } catch (error) {
       console.error("Lỗi khi thêm giỏ hàng:", error);

@@ -12,10 +12,12 @@ import { Star, ShoppingCart, Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../redux/cartSlice";
+import { useUser } from "../contexts/user.context";
 
 function Home() {
   const [books, setBooks] = useState([]);
   const [page, setPage] = useState(1);
+  const { user } = useUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,11 +36,17 @@ function Home() {
   }, [page]);
 
   const handleAddCart = async (bookId) => {
+    if (!user) {
+      const modal = document.getElementById("require_sign_in");
+      if (modal) modal.showModal();
+      return;
+    }
+
     try {
       const { data } = await apiCart.addCart(bookId);
       if (data) {
         toast.success("Thêm giỏ hàng thành công");
-        dispatch(fetchCart()); // cập nhật lại cart state
+        dispatch(fetchCart());
       }
     } catch (error) {
       console.error("Lỗi khi thêm giỏ hàng:", error);
