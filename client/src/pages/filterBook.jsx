@@ -65,7 +65,7 @@ const FilterBook = () => {
       <div className="col-span-7 row-span-5 border rounded-md">
         <div className="ms-5 mt-4 flex row">
           <span className="flex items-center me-2">sắp xếp theo:</span>
-          <select defaultValue="Pick a color" className="select w-45">
+          <select className="select w-45">
             <option selected>đọc nhiều nhất tuần</option>
             <option>đọc nhiều nhất tháng</option>
             <option>đọc nhiều nhất năm</option>

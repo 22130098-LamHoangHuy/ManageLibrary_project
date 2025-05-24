@@ -20,16 +20,25 @@ export const deleteTicketService = async (ticketId) => {
   return await Ticket.findByIdAndDelete(ticketId);
 };
 
-export const getAllTicketService = async (page = 1, limit = 8) => {
+export const getAllTicketByStatusService = async (
+  page = 1,
+  limit = 8,
+  status
+) => {
   const skip = (page - 1) * limit;
-  const tickets = await Ticket.find()
+  const tickets = await Ticket.find({ status: status })
     .populate("userId", "username email")
     .populate("books.bookId")
     .skip(skip)
     .limit(limit)
     .sort({ createdAt: -1 });
 
-  const total = await Ticket.countDocuments();
+  const total = await Ticket.countDocuments({ status: status });
 
-  return { tickets, total, page, pages: Math.ceil(total / limit) };
+  return { tickets, total };
+};
+export const getTotalTicketsService = async () => {
+  const total = await Ticket.estimatedDocumentCount();
+
+  return total;
 };

@@ -1,11 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./layouts/header";
 import Home from "./pages/home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Footer from "./layouts/footer";
 import Profile from "./pages/profile";
-import Breadcrumb from "./layouts/breadcrumb";
 import { UserProvider } from "./contexts/user.context";
 import FilterBook from "./pages/filterBook";
 import DetailBook from "./pages/detailBook";
@@ -16,19 +13,31 @@ import TicketBorrow from "./pages/myTicket/ticketBorrow";
 import TicketApproval from "./pages/myTicket/ticketApproval";
 import TicketReturn from "./pages/myTicket/ticketReturn";
 import TicketCancel from "./pages/myTicket/ticketCancel";
+import AppAdmin from "./pages/admin/app";
+import Dashboard from "./pages/admin/dashboard";
+import Users from "./pages/admin/users";
+import Books from "./pages/admin/books";
+import Tickets from "./pages/admin/tickets";
+import Layout from "./layouts/layout";
+import TicketApprovaled from "./pages/myTicket/ticketApprovaled";
+import ProtectedRoute from "./components/protectedRoute";
+import Forbidden from "./pages/forbidden";
 
 function App() {
   return (
     <UserProvider>
       <BrowserRouter>
-        <div className="sticky top-0 z-10">
-          <Header />
-        </div>
-        <div className="mt-2 mb-2 flex justify-center">
-          <Breadcrumb />
-        </div>
-        <div className="flex justify-center">
-          <Routes>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin" element={<AppAdmin />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="user" element={<Users />} />
+              <Route path="book" element={<Books />} />
+              <Route path="ticket" element={<Tickets />} />
+            </Route>
+          </Route>
+
+          <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
 
@@ -42,6 +51,7 @@ function App() {
             <Route path="/" element={<MyTicket />}>
               <Route path="ticket-borrow" element={<TicketBorrow />} />
               <Route path="ticket-approval" element={<TicketApproval />} />
+              <Route path="ticket-approvaled" element={<TicketApprovaled />} />
               <Route path="ticket-return" element={<TicketReturn />} />
               <Route path="ticket-cancel" element={<TicketCancel />} />
             </Route>
@@ -49,9 +59,9 @@ function App() {
               path="/google-auth-success"
               element={<GoogleAuthSuccess />}
             />
-          </Routes>
-        </div>
-        <Footer />
+          </Route>
+          <Route path="/forbidden" element={<Forbidden />} />
+        </Routes>
         <ToastContainer autoClose={1600} pauseOnHover={false} />
       </BrowserRouter>
     </UserProvider>

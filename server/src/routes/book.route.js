@@ -7,19 +7,22 @@ import {
   getBooksByCategory,
   getBooksBySubCategory,
   getBooksByTitle,
+  getTotalBooks,
 } from "../controllers/book.controller.js";
 
 import { Router } from "express";
+import uploadBookImage from "../configs/multerBook.js";
 
 const bookRouter = Router();
 
 bookRouter.get("/filterCategory", getBooksByCategory);
 bookRouter.get("/filterSubCategory", getBooksBySubCategory);
 bookRouter.get("/search", getBooksByTitle);
-bookRouter.post("/", createBook);
+bookRouter.get("/total", getTotalBooks);
+bookRouter.post("/", uploadBookImage.single("coverImage"), createBook);
 bookRouter.get("/", getAllBooks);
+bookRouter.patch("/:bookId", uploadBookImage.single("coverImage"), editBook);
 bookRouter.get("/:bookId", getBook);
-bookRouter.put("/:bookId", editBook);
 bookRouter.delete("/:bookId", deleteBook);
 
 export default bookRouter;

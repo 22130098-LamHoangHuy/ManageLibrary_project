@@ -8,12 +8,21 @@ import {
   getBooksByCategoryService,
   getBooksBySubCategoryService,
   getBooksByTitleService,
+  getTotalBooksService,
 } from "../services/book.service.js";
+import { SERVER_URL } from "../configs/env.js";
 
-export const createBook = async (req, res, next) => {
+export const createBook = async (req, res) => {
   try {
-    const book = await createBookService(req.body);
-    res.status(201).json(book);
+    const coverImage = `${SERVER_URL}/uploads/books/${req.file?.filename}`;
+
+    if (!coverImage) {
+      throw ErrorHandler("không có ảnh", 404);
+    }
+
+    const newBook = await createBookService(req.body, coverImage);
+
+    res.status(201).json(newBook);
   } catch (error) {
     next(error);
   }
@@ -31,8 +40,18 @@ export const deleteBook = async (req, res, next) => {
 
 export const editBook = async (req, res, next) => {
   try {
-    const updatedBook = await editBookService(req.params.bookId, req.body);
-    if (!updatedBook) throw new ErrorHandler("not found book", 404);
+    const coverImage = req.file
+      ? `${SERVER_URL}/uploads/books/${req.file.filename}`
+      : null;
+
+    const updatedBook = await editBookService(
+      req.params.bookId,
+      req.body,
+      coverImage
+    );
+
+    if (!updatedBook) throw new ErrorHandler("Không tìm thấy sách", 404);
+
     res.status(200).json(updatedBook);
   } catch (error) {
     next(error);
@@ -103,6 +122,14 @@ export const getBooksByTitle = async (req, res, next) => {
     const keyWord = req.query.keyWord || "";
     const books = await getBooksByTitleService(keyWord);
     res.status(200).json({ books });
+  } catch (error) {
+    next(error);
+  }
+};
+export const getTotalBooks = async (req, res, next) => {
+  try {
+    const total = await getTotalBooksService();
+    res.status(200).json({ totalBooks: total });
   } catch (error) {
     next(error);
   }

@@ -71,7 +71,7 @@ function DetailBook() {
 
   return (
     <div className="w-full max-w-[90%] grid grid-cols-5 gap-4 mb-7">
-      <div className="col-span-2 h-[25rem] flex flex-col items-center justify-center rounded-md border">
+      <div className="col-span-2 h-[28rem] flex flex-col items-center justify-center rounded-md border">
         <div className="w-[75%] mb-1 mx-auto">
           <img src={book.coverImage} alt="" className="mx-auto" />
         </div>

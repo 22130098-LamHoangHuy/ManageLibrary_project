@@ -16,5 +16,9 @@ const apiBook = {
   getBook: async (bookId) => await API.get(`/${bookId}`),
   getBooksByTitle: async (keyWord) =>
     await API.get(`/search?keyWord=${keyWord}`),
+  createBook: async (newBook) => await API.post("/", newBook),
+  deleteBook: async (bookId) => await API.delete(`${bookId}`),
+  editBook: async (bookId, book) => await API.patch(`/${bookId}`, book),
+  getTotalBooks: async () => await API.get("/total"),
 };
 export default apiBook;

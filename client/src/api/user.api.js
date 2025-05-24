@@ -23,6 +23,13 @@ const apiUser = {
         "Content-Type": "multipart/form-data",
       },
     }),
+  getUserByEmail: async (email) => await API.get(`/search?email=${email}`),
+  getAllUsers: async (page) => await API.get(`/?page=${page}`),
+  deleteUser: async (userId) => await API.delete(`/${userId}`),
+  createUser: async (user) => await API.post("/", user),
+  updateUserAdmin: async (userId, userData) =>
+    await API.patch(`/admin/${userId}`, userData),
+  getTotalUsers: async () => await API.get("/total"),
 };
 
 export default apiUser;

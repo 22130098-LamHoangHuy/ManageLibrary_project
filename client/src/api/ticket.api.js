@@ -15,10 +15,15 @@ API.interceptors.request.use((config) => {
 
 const ticketApi = {
   createTicket: async (ticketBody) => await API.post("/", ticketBody),
+  createTicketAdmin: async (userId, ticketBody) =>
+    await API.post(`/${userId}`, ticketBody),
   getTicketByStatus: async (status) => await API.get(`/${status}`, status),
   setTicketStatus: async (ticketId, status) =>
     await API.patch(`${ticketId}/?status=${status}`),
   deleteTicket: async (ticketId) => await API.delete(`/${ticketId}`),
+  getAllTicketByStatus: async (status, page) =>
+    await API.get(`/admin/${status}?page=${page}`),
+  getTotalTickets: async () => await API.get("/total"),
 };
 
 export default ticketApi;

@@ -22,9 +22,8 @@ export const UserProvider = ({ children }) => {
         const decoded = jwtDecode(token);
         const userId = decoded.userId;
 
-        const response = await apiUser.getUser(userId, token); // truyền token nếu cần
+        const response = await apiUser.getUser(userId);
         setUser(response.data);
-
         dispatch(fetchCart());
       } catch (error) {
         console.error("Lỗi khi lấy user:", error);

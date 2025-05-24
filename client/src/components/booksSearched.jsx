@@ -7,6 +7,7 @@ export default function BooksSearched({ onKeyWord, onClose }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    console.log("search");
     const delayDebounce = setTimeout(() => {
       if (onKeyWord.trim() !== "") {
         apiBook

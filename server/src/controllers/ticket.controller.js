@@ -1,20 +1,30 @@
 import {
-  getAllTicketService,
+  getAllTicketByStatusService,
   getTicketByUserIdService,
   getTicketByStatusService,
   createTicketService,
   deleteTicketService,
   setStatusTicketService,
+  getTotalTicketsService,
 } from "../services/ticket.service.js";
+import ErrorHandler from "../middlewares/errors/ErrorHandler.js";
 
-export const getAllTicket = async (req, res, next) => {
+export const getAllTicketByStatus = async (req, res, next) => {
   try {
-    const { page, limit } = req.query;
-    const result = await getAllTicketService(
-      Number(page) || 1,
-      Number(limit) || 8
+    const page = parseInt(req.query.page) || 1;
+    const limit = 8;
+    const { status } = req.params;
+    const { tickets, total } = await getAllTicketByStatusService(
+      page,
+      limit,
+      status
     );
-    res.status(200).json(result);
+    res.status(200).json({
+      tickets,
+      total,
+      page,
+      totalPages: Math.ceil(total / 8),
+    });
   } catch (error) {
     next(error);
   }
@@ -41,7 +51,20 @@ export const getTicketByStatus = async (req, res, next) => {
 //6.6 gọi phương thức createTicket() từ lớp TicketController
 export const creatTicket = async (req, res, next) => {
   try {
-    const newTicket = await createTicketService(req.userId, req.body);
+    const userId = req.userId;
+    if (!userId) throw new ErrorHandler("Thiếu userId", 400);
+    const newTicket = await createTicketService(userId, req.body);
+    res.status(201).json(newTicket);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const creatTicketAdmin = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    if (!userId) throw new ErrorHandler("Thiếu userId", 400);
+    const newTicket = await createTicketService(userId, req.body);
     res.status(201).json(newTicket);
   } catch (error) {
     next(error);
@@ -64,6 +87,15 @@ export const setSatusTicket = async (req, res, next) => {
     const { status } = req.query;
     const updated = await setStatusTicketService(ticketId, status);
     res.status(200).json(updated);
+  } catch (error) {
+    next(error);
+  }
+};
+export const getTotalTickets = async (req, res, next) => {
+  try {
+    const total = await getTotalTicketsService();
+
+    res.status(200).json({ totalTickets: total });
   } catch (error) {
     next(error);
   }

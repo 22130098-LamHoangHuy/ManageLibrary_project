@@ -7,8 +7,6 @@ import DatePicker from "react-datepicker";
 import { vi } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 const Profile = () => {
   //setUser từ Context
   const { user, setUser, loading } = useUser();
@@ -27,7 +25,7 @@ const Profile = () => {
       setEmail(user.email || "");
       setGender(user.gender || null);
       setBirthday(user.birthday || null);
-      setAvatar(`${apiUrl}${user.avatar}`);
+      setAvatar(user.avatar);
     }
   }, [user]);
 
@@ -58,7 +56,7 @@ const Profile = () => {
     try {
       const res = await apiUser.updateAvatar(user._id, formData);
       if (res.status === 200) {
-        const newAvatarPath = `${apiUrl}${res.data.avatar}`;
+        const newAvatarPath = res.data.avatar;
         setAvatar(newAvatarPath);
         setUser({ ...user, avatar: res.data.avatar });
         toast.success("Cập nhật ảnh đại diện thành công!");

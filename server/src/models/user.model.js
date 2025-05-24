@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { SERVER_URL } from "../configs/env.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -33,7 +34,7 @@ const userSchema = new mongoose.Schema(
 
     avatar: {
       type: String,
-      default: "/uploads/avatars/blank-avatar.png",
+      default: `${SERVER_URL}/uploads/avatars/blank-avatar.png`,
     },
     isAdmin: {
       type: Boolean,

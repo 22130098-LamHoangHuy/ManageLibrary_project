@@ -19,6 +19,11 @@ export default function MyTicket() {
       icon: <ClipboardPenLine size={18} />,
     },
     {
+      to: "ticket-approvaled",
+      label: "Phiếu đã duyệt",
+      icon: <ClipboardCheck size={18} />,
+    },
+    {
       to: "ticket-return",
       label: "Phiếu Đã trả",
       icon: <ClipboardCheck size={18} />,

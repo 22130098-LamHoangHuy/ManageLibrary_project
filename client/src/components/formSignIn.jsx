@@ -1,29 +1,54 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import authApi from "../api/auth.api";
-import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../redux/cartSlice";
+import { useUser } from "../contexts/user.context";
+import { useNavigate } from "react-router-dom";
+import apiUser from "../api/user.api";
+import { jwtDecode } from "jwt-decode";
 
 function FromSignIn() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const { user, setUser } = useUser();
 
   const handleSignIn = async () => {
     try {
       const response = await authApi.signIn({ email, password });
       if (response.data) {
-        localStorage.setItem("token", response.data.token);
+        const { token } = response.data;
+        localStorage.setItem("token", token);
+
+        // Giải mã token để lấy userId hoặc role
+        const decoded = jwtDecode(token);
+
+        // Gọi API lấy user bằng userId
+        const resUser = await apiUser.getUser(decoded.userId);
+
+        setUser(resUser.data);
+
         dispatch(fetchCart());
-        window.location.reload();
-        handleCloseSignIn(); // đóng modal
+        handleCloseSignIn();
+
+        if (resUser.data.isAdmin) {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       console.log(error.response.data.message);
       if (error.response) setError(error.response.data.message);
     }
   };
+
+  if (user) {
+    console.log(`is admin: ${user.isAdmin}`);
+    //nếu user là admin chuyển đến route "admin/dashboard"
+  }
 
   const handleSigInWithGoogle = async () => {
     try {

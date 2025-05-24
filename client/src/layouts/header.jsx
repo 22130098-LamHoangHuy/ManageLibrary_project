@@ -22,8 +22,6 @@ import { useSelector } from "react-redux";
 
 // trong component Header
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 const Header = () => {
   // const { setSelectedCategories } = useFilterBook();
 
@@ -206,7 +204,7 @@ const Header = () => {
           <div tabIndex={0} role="button" className="btn btn-ghost">
             {user ? (
               <img
-                src={`${apiUrl}${user.avatar}`}
+                src={user.avatar}
                 alt="Avatar"
                 className="w-8 h-8 rounded-full"
               />
